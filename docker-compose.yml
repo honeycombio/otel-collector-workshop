@@ -1,0 +1,23 @@
+version: "3" 
+services: 
+  application: 
+    build:
+      dockerfile: Dockerfile
+      context: ./app
+    ports:
+      - 127.0.0.1:8081:8081
+    environment:
+      OTEL_ENDPOINT:
+      OTEL_SERVICE:
+      HONEYCOMB_API_KEY:
+
+  otel-collector:
+    container_name: otel-collector-workshop-container
+    image: otel/opentelemetry-collector-contrib:latest
+    command: ["--config=/etc/otel-collector-config.yml"]
+    volumes: 
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4317" # OTLP gRPC receiver
+    environment:
+      HONEYCOMB_API_KEY:
