@@ -6,19 +6,12 @@ const { Resource } = require('@opentelemetry/resources');
 const { NodeSDK } = require('@opentelemetry/sdk-node');
 const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventions');
 const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node');
-// const { OTLPTraceExporter } = require("@opentelemetry/exporter-trace-otlp-proto"); // http
 const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc'); // grpc
-const { Metadata, credentials } = require("@grpc/grpc-js");
-// const { CollectorTraceExporter } = require("@opentelemetry/exporter-collector-grpc");
-
-const metadata = new Metadata()
-metadata.set('x-honeycomb-team', config.apiKey);
-// metadata.set('x-honeycomb-dataset', config.dataset);
+const { credentials } = require("@grpc/grpc-js");
 
 const traceExporter = new OTLPTraceExporter({
   url: config.endpoint,
   credentials: credentials.createSsl(),
-  // metadata
 });
 
 const sdk = new NodeSDK({
