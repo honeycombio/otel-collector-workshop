@@ -1,13 +1,9 @@
 'use strict';
 
 require('./tracing')
+
 const config = require('./config')
 const express = require('express');
-// const Prometheus = require('prom-client')
-
-// Constants
-const PORT = 8081;
-const HOST = '0.0.0.0';
 
 // App
 const app = express();
@@ -43,5 +39,5 @@ app.get('/', (req, res) => {
   // .observe(duration)
 });
 
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+app.listen(config.port, config.port);
+console.log(`Running on http://${config.host}:${config.port}`);
